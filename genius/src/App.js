@@ -10,9 +10,9 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    const songs = fetchAllSongs()
-    console.log(songs)
+  async componentDidMount() {
+    const songs = await fetchAllSongs()
+    console.log(songs.data)
   }
 
   render() {
