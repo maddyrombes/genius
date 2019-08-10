@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import { fetchAllSongs } from './services/api-helper';
 
 class App extends React.Component {
   constructor() {
@@ -10,7 +11,8 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-
+    const songs = fetchAllSongs()
+    console.log(songs)
   }
 
   render() {
