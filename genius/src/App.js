@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { fetchAllSongs } from './services/api-helper';
+import { fetchAllSongs, stream } from './services/api-helper';
 
 class App extends React.Component {
   constructor() {
@@ -12,13 +12,18 @@ class App extends React.Component {
 
   async componentDidMount() {
     const songs = await fetchAllSongs()
-    console.log(songs.data)
+    const splitData = songs.data.split('\n')
+    this.setState({ songs: splitData })
   }
 
   render() {
     return (
       <div className="App">
-        <h1>Test</h1>
+        {this.state.songs.map((song) => (
+          <div>
+            <p>{JSON.parse(song).title}</p>
+          </div>
+        ))}
       </div>
     );
   }
