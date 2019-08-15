@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans&display=swap');
+
+
+body {
+  text-align: center;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+h1 {
+  font-size: 20px;
+  letter-spacing: 3px;
+  padding-top: 20px;
+  margin: 0 0 15px 0;
+  background-color: #F7F16C;
+  height: 60px;
+}
+
+
+li {
+  list-style-type: none;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  justify-content: center;
+
+}
+
+.nav-item {
+  margin: 10px;
+  color: black;
+}
+
+.mls-list-item {
+  line-height: 30px;
+}
+
+.genius-logo {
+  height: 35px;
+  margin-top: 5px;
+}
