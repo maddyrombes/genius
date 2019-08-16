@@ -24,9 +24,6 @@ class App extends React.Component {
     this.setState({ songs: splitData })
   };
 
-
-
-
   // for Part 1 Q1 -- creates object for each artist
   // with count of lyric blocks
   countBlocks = () => {
@@ -81,9 +78,7 @@ class App extends React.Component {
   };
 
 
-
-
-  // for Part 1 Q2 -- 
+  // Part 1 Q2 and Q3 
   countBlocksSpecificArtists = async () => {
     let songs = this.state.songs;
     let splitBlocks = []
@@ -96,16 +91,8 @@ class App extends React.Component {
           let splitLyrics = lyrics.split("]")[1]
           let actualArtist = lyrics.split("]")[0]
 
-          if (actualArtist.includes(", " || "& ")) {
-            // console.log(actualArtist.split(/,|&/))
-            actualArtist.split(/,|&/).forEach((artist) => {
-              songObj.actualArtist = artist
-              songObj.lyrics = splitLyrics
-            })
-          } else {
-            songObj.actualArtist = actualArtist
-            songObj.lyrics = splitLyrics
-          }
+          songObj.actualArtist = actualArtist
+          songObj.lyrics = splitLyrics
 
         } else {
           songObj.actualArtist = "none"
@@ -114,7 +101,6 @@ class App extends React.Component {
         splitBlocks.push(songObj)
       })
     });
-    // console.log(splitBlocks)
 
     let objArr = []
     splitBlocks.forEach((block) => {
@@ -122,7 +108,6 @@ class App extends React.Component {
         let sum = splitBlocks.reduce((acc, val) => {
           return val.actualArtist === block.actualArtist ? acc + 1 : acc
         }, 0)
-
 
         let obj = {}
         obj.total = sum
@@ -145,12 +130,50 @@ class App extends React.Component {
       }
       return 0;
     }
+    // FINAL ANSWER : Q2
     // console.log(finalCount.sort(compare))
+
+    let counts = splitBlocks.reduce((prev, curr) => {
+      let count = prev.get(curr.actualArtist) || 0;
+      prev.set(curr.actualArtist, curr.lyrics + count);
+      return prev;
+    }, new Map());
+
+    let reducedsplitBlocks = [...counts].map(([actualArtist, lyrics]) => {
+      return { actualArtist, lyrics }
+    })
+
+    let final = []
+    reducedsplitBlocks.forEach((artist) => {
+      let artistName = artist.actualArtist
+      if (typeof artist.lyrics === "string") {
+        let arr = artist.lyrics.split(" ");
+        let wordCounts = {};
+        wordCounts.artist = artistName
+        for (let i = 0; i < arr.length; i++) {
+          var word = arr[i];
+          if (!wordCounts[word]) {
+            wordCounts[word] = 1;
+          } else {
+            wordCounts[word]++;
+          }
+        }
+        final.push(wordCounts);
+      }
+    })
+
+    let q3 = []
+
+    final.forEach((artist) => {
+      let obj = {};
+      obj.artist = artist.artist
+      obj.numWords = Object.keys(artist).length
+      q3.push(obj)
+    })
+
+    // FINAL ANSWER : Q3
+    // console.log(q3.sort((a, b) => (a.numWords > b.numWords) ? -1 : (a.numWords === b.numWords) ? ((a.size > b.size) ? -1 : 1) : 1))
   };
-
-
-
-
 
   render() {
     this.countBlocks()
